@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Вход в админку{% endblock %}
+{% block content %}
+<div class="container mx-auto max-w-md mt-20 p-6 border rounded-lg shadow bg-white dark:bg-gray-800">
+    <h1 class="text-2xl font-bold mb-4 text-center">Вход в админку</h1>
+    {% if error %}
+    <div class="mb-4 p-2 bg-red-100 text-red-700 rounded">{{ error }}</div>
+    {% endif %}
+    <form method="post">
+        <div class="mb-4">
+            <label class="block text-sm font-medium mb-1" for="username">Логин</label>
+            <input class="w-full p-2 border rounded" type="text" name="username" id="username" required>
+        </div>
+        <div class="mb-4">
+            <label class="block text-sm font-medium mb-1" for="password">Пароль</label>
+            <input class="w-full p-2 border rounded" type="password" name="password" id="password" required>
+        </div>
+        <button class="w-full bg-blue-600 hover:bg-blue-700 text-white p-2 rounded" type="submit">Войти</button>
+    </form>
+</div>
+{% endblock %}

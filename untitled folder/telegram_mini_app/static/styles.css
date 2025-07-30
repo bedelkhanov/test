@@ -1,0 +1,39 @@
+/* Основные переменные для цветов, которые меняются в зависимости от темы WebApp */
+:root {
+  --bg-color: #f6f6f6;
+  --text-color: #1a1a1a;
+}
+
+html, body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  min-height: 100%;
+}
+
+/* Корректировка тёмной темы, если Telegram.WebApp.themeParams передаст цвета */
+[data-theme='dark'] {
+  --bg-color: #1e1e1e;
+  --text-color: #e5e5e5;
+}
+
+/* Контейнеры */
+.container {
+  width: 100%;
+  max-width: 1024px;
+}
+
+/* Списки */
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+/* Кнопки */
+button {
+  cursor: pointer;
+}
+
+/* Видео */
+video {
+  max-height: 240px;
+}

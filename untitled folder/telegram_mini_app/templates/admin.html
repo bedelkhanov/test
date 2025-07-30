@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Админ‑панель{% endblock %}
+{% block content %}
+<div class="container mx-auto p-6">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-3xl font-bold">Админ‑панель</h1>
+        <a href="{{ url_for('admin_logout') }}" class="text-red-600">Выйти</a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Форма добавления рубрики -->
+        <div class="p-4 border rounded shadow bg-white dark:bg-gray-800">
+            <h2 class="text-xl font-semibold mb-4">Добавить рубрику</h2>
+            <form action="{{ url_for('admin_add_category') }}" method="post">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-1" for="name">Название рубрики</label>
+                    <input class="w-full p-2 border rounded" type="text" name="name" id="name" required>
+                </div>
+                <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded" type="submit">Создать</button>
+            </form>
+        </div>
+
+        <!-- Форма добавления видео -->
+        <div class="p-4 border rounded shadow bg-white dark:bg-gray-800">
+            <h2 class="text-xl font-semibold mb-4">Добавить видеоролик</h2>
+            <form action="{{ url_for('admin_add_video') }}" method="post" enctype="multipart/form-data">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-1" for="title">Заголовок</label>
+                    <input class="w-full p-2 border rounded" type="text" name="title" id="title" required>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-1" for="category_id">Рубрика</label>
+                    <select class="w-full p-2 border rounded" name="category_id" id="category_id" required>
+                        {% for category in categories %}
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-1" for="video_file">Файл видео</label>
+                    <input class="w-full" type="file" name="video_file" id="video_file" accept="video/*" required>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-1" for="analysis">Разбор/Описание</label>
+                    <textarea class="w-full p-2 border rounded" name="analysis" id="analysis" rows="4"></textarea>
+                </div>
+                <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded" type="submit">Загрузить</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Список загруженных роликов -->
+    <div class="mt-8">
+        <h2 class="text-2xl font-semibold mb-4">Существующие видеоролики</h2>
+        {% if videos %}
+        <ul class="space-y-4">
+            {% for video in videos %}
+            <li class="p-4 border rounded bg-white dark:bg-gray-800">
+                <strong>{{ video.title }}</strong> — рубрика: {{ video.category.name }}<br>
+                <em>Файл:</em> {{ video.video_filename }}
+                {% if video.analysis %}<br><em>Разбор:</em> {{ video.analysis | truncate(150) }}{% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="text-gray-500">Пока нет загруженных роликов.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
