@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-full" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Admin{% endblock %}</title>
+    <!-- Tailwind CSS через CDN для простых стилей -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Наши дополнительные стили -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <!-- Поддержка светлой/тёмной темы -->
+    <script>
+        // При загрузке проверяем, доступен ли Telegram WebApp для установки темы
+        if (window.Telegram && window.Telegram.WebApp) {
+            const themeParams = Telegram.WebApp.themeParams;
+            if (themeParams) {
+                const bgColor = themeParams.bg_color || '#ffffff';
+                const textColor = themeParams.text_color || '#000000';
+                document.documentElement.style.setProperty('--bg-color', bgColor);
+                document.documentElement.style.setProperty('--text-color', textColor);
+            }
+        }
+    </script>
+    {% block head %}{% endblock %}
+</head>
+<body class="min-h-screen flex flex-col" style="background-color: var(--bg-color, #f6f6f6); color: var(--text-color, #000);">
+    {% block content %}{% endblock %}
+</body>
+</html>
